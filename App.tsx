@@ -1,20 +1,25 @@
+import React from 'react';
+import {
+  useFonts,
+  NunitoSans_400Regular as nunito400Regular,
+  NunitoSans_700Bold as nunito700Bold,
+} from '@expo-google-fonts/nunito-sans';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { ThemeProvider, useTheme } from 'styled-components/native';
+import { theme } from '@theme/index';
+import { Routes } from 'src/routes';
+import { Loading } from '@components/Loading';
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    nunito400Regular,
+    nunito700Bold,
+  });
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeProvider theme={theme}>
+      {fontsLoaded ? <Routes /> : <Loading />}
+      <StatusBar style="auto" backgroundColor={theme.COLORS.GREE_LIGHT} />
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
