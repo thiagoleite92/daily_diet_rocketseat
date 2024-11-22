@@ -1,9 +1,9 @@
 import { css } from 'styled-components';
 import styled from 'styled-components/native';
 
-export const Container = styled.SafeAreaView`
+export const HomeContainer = styled.SafeAreaView`
   flex: 1;
-  background-color: #f5f5f5;
+  background-color: #fff;
   padding: 24px;
   display: flex;
   flex-direction: column;

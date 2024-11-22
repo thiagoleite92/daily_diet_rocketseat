@@ -3,11 +3,12 @@ import { ButtonContainer, TextContainer, PlusSign } from './styles';
 
 type ButtonProps = {
   text?: string;
+  onPress: () => void;
 };
 
-export function Button({ text }: ButtonProps) {
+export function Button({ text, onPress }: ButtonProps) {
   return (
-    <ButtonContainer>
+    <ButtonContainer onPress={() => onPress()}>
       <TextContainer>
         <PlusSign />
       </TextContainer>

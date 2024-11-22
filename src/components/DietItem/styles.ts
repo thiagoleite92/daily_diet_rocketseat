@@ -8,6 +8,7 @@ export const Item = styled.View`
   border-radius: 8px;
   align-items: center;
   padding: 14px 0;
+  margin-bottom: 8px;
 `;
 
 export const TimeContainer = styled.View`
