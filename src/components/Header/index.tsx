@@ -2,7 +2,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { Avatar, Logo, HeaderContainer, Container, LeftArrow } from './styles';
 import logoImg from '@assets/logo.png';
 import avatarImg from '@assets/avatar.png';
-import { TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 
 type HeaderProps = {
   showBackButton: boolean;
@@ -27,6 +27,7 @@ export function Header({ showBackButton }: HeaderProps) {
             onPress={handleNavigateToHome}
             style={{ marginLeft: 27 }}
           >
+            <Text>oi</Text>
             <LeftArrow />
           </TouchableOpacity>
         )}
