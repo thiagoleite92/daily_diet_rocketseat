@@ -1,29 +1,26 @@
 import { Input } from '@components/Input';
-import { DateContainer, Form, NewMealContainer } from './styles';
+import {
+  DateContainer,
+  DietIcon,
+  Form,
+  MealType,
+  MealTypeContainer,
+  NewMealContainer,
+} from './styles';
 import { Header } from '@components/Header';
 import { MaskInput } from '@components/MaskInput';
+import { FormatDate } from 'src/util/FormatDate';
+import { Button } from '@components/Button';
+import { useTheme } from 'styled-components/native';
 
 export function NewMeal() {
-  const dateMask = [
-    /\d/,
-    /\d/, // Dia: Dois dígitos
-    '/', // Separador
-    /\d/,
-    /\d/, // Mês: Dois dígitos
-    '/', // Separador
-    /\d/,
-    /\d/,
-    /\d/,
-    /\d/, // Ano: Quatro dígitos
-  ];
+  const { COLORS } = useTheme();
 
-  const timeMask = [
-    /[0-2]/, // Primeira posição da hora: 0 a 2
-    /\d/, // Segunda posição da hora: 0 a 9
-    ':', // Separador
-    /[0-5]/, // Primeira posição dos minutos: 0 a 5
-    /\d/, // Segunda posição dos minutos: 0 a 9
-  ];
+  const currentDate = FormatDate.getCurrentDate();
+
+  const handleNewMeal = () => {
+    console.log('new meal');
+  };
 
   return (
     <NewMealContainer>
@@ -34,18 +31,29 @@ export function NewMeal() {
           label="Descrição"
           multiline
           numberOfLines={4}
-          maxLength={100}
+          maxLength={130}
           placeholder="Mix de salada de frutas sem leite condensado"
         />
         <DateContainer>
-          <MaskInput
-            label="Data"
-            maxLength={50}
-            placeholder="12/12/12"
-            mask={dateMask}
-          />
-          <MaskInput label="Hora" maxLength={50} mask={timeMask} />
+          <MaskInput label="Data" maxLength={50} placeholder={currentDate} />
+          <MaskInput label="Hora" maxLength={50} placeholder="12:00" />
         </DateContainer>
+        <MealTypeContainer>
+          <MealType diet={null} onPress={() => console.log('oi')}>
+            <DietIcon color={COLORS.GREEN_DARK} style={{ marginRight: 8 }} />
+            Sim
+          </MealType>
+          <MealType diet={null} onPress={() => console.log('oi')}>
+            <DietIcon color={COLORS.RED_DARK} style={{ marginRight: 8 }} />
+            Não
+          </MealType>
+        </MealTypeContainer>
+        <Button
+          variant="PRIMARY"
+          text="Cadastrar Refeição"
+          showIcon={false}
+          onPress={handleNewMeal}
+        />
       </Form>
     </NewMealContainer>
   );

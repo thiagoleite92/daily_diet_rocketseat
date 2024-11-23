@@ -12,7 +12,7 @@ export function Input({ inputRef, label, ...rest }: InputProps) {
   const { COLORS } = useTheme();
 
   return (
-    <InputContainer style={[label === 'Descrição' && { height: 120 }]}>
+    <InputContainer style={[label === 'Descrição' && { height: 150 }]}>
       <Label>{label}</Label>
       <InputField
         ref={inputRef}

@@ -14,10 +14,14 @@ type DietItemProps = {
   diet: boolean;
 };
 export function DietItem({ diet, meal, time }: DietItemProps) {
+  const hoursAndMinutesFormated = FormatDate.formatHoursAndMinutes(
+    new Date(time)
+  );
+
   return (
     <Item>
       <TimeContainer>
-        <TimeText>{FormatDate.getHoursAndMinutes(new Date(time))}</TimeText>
+        <TimeText>{hoursAndMinutesFormated}</TimeText>
       </TimeContainer>
       <MealContainer>
         <TimeText>{meal}</TimeText>

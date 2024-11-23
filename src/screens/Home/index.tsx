@@ -45,7 +45,11 @@ export function Home() {
       </HeaderContainer>
       <NewMealContainer>
         <ButtonTitle>Refeições</ButtonTitle>
-        <Button text="Nova refeição" onPress={handleNewMealPage} />
+        <Button
+          text="Nova refeição"
+          onPress={handleNewMealPage}
+          variant="PRIMARY"
+        />
       </NewMealContainer>
 
       <SectionList

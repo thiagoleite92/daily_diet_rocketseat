@@ -1,18 +1,28 @@
-import { Text, TouchableOpacity, View } from 'react-native';
-import { ButtonContainer, TextContainer, PlusSign } from './styles';
+import {
+  ButtonContainer,
+  TextContainer,
+  PlusSign,
+  VariantProps,
+} from './styles';
 
 type ButtonProps = {
   text?: string;
-  onPress: () => void;
-};
+  showIcon: boolean;
+  onPress?: () => void;
+} & VariantProps;
 
-export function Button({ text, onPress }: ButtonProps) {
+export function Button({
+  text,
+  onPress = () => {},
+  variant = 'PRIMARY',
+  showIcon = true,
+}: ButtonProps) {
   return (
-    <ButtonContainer onPress={() => onPress()}>
-      <TextContainer>
-        <PlusSign />
+    <ButtonContainer onPress={() => onPress()} variant={variant}>
+      <TextContainer variant={variant}>
+        {showIcon && <PlusSign variant={variant} />}
       </TextContainer>
-      <TextContainer>{text}</TextContainer>
+      <TextContainer variant={variant}>{text}</TextContainer>
     </ButtonContainer>
   );
 }
