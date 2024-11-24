@@ -19,7 +19,6 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       {fontsLoaded ? <Routes /> : <Loading />}
-      <StatusBar style="auto" backgroundColor={theme.COLORS.GREE_LIGHT} />
     </ThemeProvider>
   );
 }

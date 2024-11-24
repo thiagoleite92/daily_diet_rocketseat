@@ -37,6 +37,24 @@ export const Avatar = styled.Image<ImagesProps>`
   height: ${({ height }) => height}px;
 `;
 
+export const TitleContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 94px;
+`;
+
+export const TitleText = styled.Text`
+  ${({ theme }) => css`
+    color: ${theme.COLORS.GRAY_200};
+    font-size: ${theme.FONT_SIZE.LG}px;
+    font-family: ${theme.FONT_FAMILY.BOLD};
+  `}
+  text-align: center;
+`;
+
 export const LeftArrow = styled(ArrowLeft).attrs(({ theme }) => ({
   size: 24,
   color: theme.COLORS.GRAY_200,

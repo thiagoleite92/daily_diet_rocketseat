@@ -16,7 +16,7 @@ export const Label = styled.Text`
 export const InputField = styled(TextInput)`
   flex: 1;
   min-height: 56px;
-  max-height: 120px;
+  max-height: 200px;
   border-radius: 6px;
   padding: 16px;
   ${({ theme }) => css`

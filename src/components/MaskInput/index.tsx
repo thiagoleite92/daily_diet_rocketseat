@@ -8,12 +8,16 @@ import { dateMask, timeMask } from 'src/util/DateInputMasks';
 type InputProps = TextInputProps & {
   label: string;
   inputRef?: React.RefObject<TextInput>;
+  setFunction: (value: any) => void;
 };
 
-export function MaskInput({ inputRef, label, ...rest }: InputProps) {
+export function MaskInput({
+  inputRef,
+  label,
+  setFunction,
+  ...rest
+}: InputProps) {
   const { COLORS } = useTheme();
-
-  const [phone, setPhone] = useState('');
 
   return (
     <MaskInputContainer
@@ -25,9 +29,8 @@ export function MaskInput({ inputRef, label, ...rest }: InputProps) {
       <Label>{label}</Label>
       <MaskInputField
         ref={inputRef}
-        value={phone}
-        onChangeText={(masked, unmasked) => {
-          setPhone(masked); // you can use the unmasked value as well
+        onChangeText={(masked) => {
+          setFunction(masked);
         }}
         mask={label === 'Hora' ? timeMask : dateMask}
         placeholderTextColor={COLORS.GRAY_300}

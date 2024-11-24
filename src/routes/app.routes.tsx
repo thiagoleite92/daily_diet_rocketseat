@@ -4,6 +4,8 @@ import { useTheme } from 'styled-components/native';
 import { Home } from '@screens/Home';
 import { Numbers } from '@screens/Numbers';
 import { NewMeal } from '@screens/NewMeal';
+import { useRoute } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 

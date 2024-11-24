@@ -7,6 +7,7 @@ export const MaskInputContainer = styled.View`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  flex: 1;
 `;
 
 export const Label = styled.Text`

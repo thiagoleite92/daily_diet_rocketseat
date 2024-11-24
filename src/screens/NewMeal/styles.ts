@@ -11,7 +11,8 @@ export const Form = styled.View`
   padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  justify-content: flex-start;
+  gap: 40px;
 `;
 
 export const DateContainer = styled.View`
@@ -19,6 +20,7 @@ export const DateContainer = styled.View`
   flex-direction: row;
   gap: 8px;
   justify-content: space-between;
+  margin-bottom: 8px;
 `;
 
 export const MealTypeContainer = styled.View`
@@ -39,7 +41,7 @@ const getColor = (
   const colorsByDiet = {
     null: {
       background: theme.COLORS.GRAY_600,
-      border: 'none',
+      border: '1px solid transparent',
     },
     true: {
       background: theme.COLORS.GREEN,
@@ -54,12 +56,16 @@ const getColor = (
   return colorsByDiet[String(diet) as 'null' | 'true' | 'false'][type];
 };
 
-export const MealType = styled.Text<MealTypeProps>`
+export const MealType = styled.Pressable<MealTypeProps>`
   flex: 1;
   padding-top: 16px;
   padding-bottom: 16px;
-  text-align: center;
   border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 
   ${({ theme, diet }) => css`
     background-color: ${getColor(theme, diet, 'background')};
@@ -69,7 +75,9 @@ export const MealType = styled.Text<MealTypeProps>`
   `}
 `;
 
-export const DietIcon = styled(Circle).attrs(({ theme, color }) => ({
+export const DietIcon = styled(Circle).attrs(() => ({
   size: 8,
   weight: 'fill',
-}))``;
+}))`
+  margin-left: 16px;
+`;
