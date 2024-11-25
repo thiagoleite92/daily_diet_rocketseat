@@ -8,7 +8,7 @@ type SummaryContainerProps = {
 
 export const SummaryContainer = styled.View<SummaryContainerProps>`
   background-color: ${({ theme, meta }) =>
-    meta >= 80 ? theme.COLORS.GREE_LIGHT : theme.COLORS.RED_LIGHT};
+    meta >= 80 ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
   display: flex;
   flex-direction: column;
   justify-content: center;

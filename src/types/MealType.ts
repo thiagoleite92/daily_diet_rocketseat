@@ -1,8 +1,6 @@
+import { MealDto } from '@storage/meal/meal-dto';
+
 export type MealType = {
-  date: Date;
-  data: {
-    time: Date;
-    meal: string;
-    diet: boolean;
-  };
+  date: string;
+  data: MealDto[];
 };

@@ -8,34 +8,32 @@ import {
 import { Summary } from '@components/Summary';
 import { Button } from '@components/Button';
 import { MealType } from 'src/types/MealType';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { SectionList, Text, View } from 'react-native';
 import { DietItem } from '@components/DietItem';
 import { DietSection } from '@components/DietSection';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { getMeals } from '@storage/meal/get-meals';
 
 export function Home() {
   const { navigate } = useNavigation();
 
-  // const [meals, setMeals] = useState<MealType[]>();
-
-  const DATA = [
-    {
-      date: new Date().toISOString(),
-      data: [
-        { meal: 'ovos', time: new Date().getTime(), diet: true },
-        { meal: 'ovos', time: new Date().getTime(), diet: false },
-      ],
-    },
-    {
-      date: new Date().toISOString(),
-      data: [{ meal: 'ovos', time: new Date().getTime(), diet: true }],
-    },
-  ];
+  const [meals, setMeals] = useState<MealType[]>([]);
 
   const handleNewMealPage = () => {
     navigate('new-meal');
   };
+
+  const fetchMeals = async () => {
+    const response = await getMeals();
+    setMeals(response);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchMeals();
+    }, [])
+  );
 
   return (
     <HomeContainer>
@@ -46,6 +44,7 @@ export function Home() {
       <NewMealContainer>
         <ButtonTitle>Refeições</ButtonTitle>
         <Button
+          showIcon
           text="Nova refeição"
           onPress={handleNewMealPage}
           variant="PRIMARY"
@@ -53,8 +52,8 @@ export function Home() {
       </NewMealContainer>
 
       <SectionList
-        sections={DATA}
-        keyExtractor={(item) => item.meal + item.time}
+        sections={meals}
+        keyExtractor={(item) => item.id}
         renderItem={({ item: { time, diet, meal } }) => (
           <DietItem time={time} diet={diet} meal={meal} />
         )}

@@ -10,18 +10,14 @@ import { Text } from 'react-native';
 
 type DietItemProps = {
   meal: string;
-  time: number;
+  time: string;
   diet: boolean;
 };
 export function DietItem({ diet, meal, time }: DietItemProps) {
-  const hoursAndMinutesFormated = FormatDate.formatHoursAndMinutes(
-    new Date(time)
-  );
-
   return (
     <Item>
       <TimeContainer>
-        <TimeText>{hoursAndMinutesFormated}</TimeText>
+        <TimeText>{time}</TimeText>
       </TimeContainer>
       <MealContainer>
         <TimeText>{meal}</TimeText>

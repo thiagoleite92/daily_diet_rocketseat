@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
-import { Alert, GestureResponderEvent, Text } from 'react-native';
+import { Alert, Text } from 'react-native';
 import { useTheme } from 'styled-components/native';
+import ShortUniqueId from 'short-unique-id';
 import { Input } from '@components/Input';
 import {
   DateContainer,
@@ -12,13 +13,14 @@ import {
 } from './styles';
 import { Header } from '@components/Header';
 import { MaskInput } from '@components/MaskInput';
-import { FormatDate } from 'src/util/FormatDate';
 import { Button } from '@components/Button';
 import { StatusBar } from 'expo-status-bar';
+import { MealDto } from '@storage/meal/meal-dto';
+import { saveMeal } from '@storage/meal/save-meal';
 
 export function NewMeal() {
   const { COLORS } = useTheme();
-  const currentDate = FormatDate.getCurrentDate();
+  const uid = new ShortUniqueId({ length: 8 });
 
   const [meal, setMeal] = useState('');
   const [date, setDate] = useState('');
@@ -30,10 +32,32 @@ export function NewMeal() {
     setMealType(isDiet);
   };
 
-  const handleNewMeal = useCallback(() => {
-    if (!meal || !date || !time || !mealDescription || mealType === null) {
+  const handleNewMeal = useCallback(async () => {
+    if (
+      !meal ||
+      meal?.trim()?.length < 3 ||
+      !date ||
+      date.trim()?.length < 9 ||
+      !time ||
+      time.trim()?.length < 5 ||
+      !mealDescription ||
+      mealDescription.trim()?.length < 4 ||
+      mealType === null
+    ) {
+      console.log('erro');
       return Alert.alert('Verifique os campos e opção de refeição');
     }
+
+    const mealData: MealDto = {
+      meal,
+      time,
+      date,
+      diet: mealType,
+      description: mealDescription,
+      id: uid.rnd(),
+    };
+
+    await saveMeal(mealData);
 
     console.log(1);
   }, [mealType, meal, date, time, mealDescription]);
@@ -43,10 +67,11 @@ export function NewMeal() {
       <Header showBackButton headerTitle="Nova Refeição" />
       <Form>
         <Input
-          label="Nome"
+          label="Refeição"
           maxLength={50}
           placeholder="Ex: Salada de Frutas"
           onChangeText={setMeal}
+          value={meal}
         />
         <Input
           label="Descrição"
@@ -55,12 +80,13 @@ export function NewMeal() {
           maxLength={130}
           placeholder="Mix de salada de frutas sem leite condensado"
           onChangeText={setMealDescription}
+          value={mealDescription}
         />
         <DateContainer>
           <MaskInput
             label="Data"
             maxLength={50}
-            placeholder={currentDate}
+            placeholder={'01/01/2022'}
             setFunction={setDate}
             value={date}
           />
