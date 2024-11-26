@@ -19,9 +19,11 @@ export function Button({
 }: ButtonProps) {
   return (
     <ButtonContainer onPress={() => onPress()} variant={variant}>
-      <TextContainer variant={variant}>
-        {showIcon && <PlusSign variant={variant} />}
-      </TextContainer>
+      {showIcon && (
+        <TextContainer variant={variant}>
+          <PlusSign variant={variant} />
+        </TextContainer>
+      )}
       <TextContainer variant={variant}>{text}</TextContainer>
     </ButtonContainer>
   );

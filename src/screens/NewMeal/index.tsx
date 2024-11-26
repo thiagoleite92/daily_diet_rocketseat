@@ -17,8 +17,10 @@ import { Button } from '@components/Button';
 import { StatusBar } from 'expo-status-bar';
 import { MealDto } from '@storage/meal/meal-dto';
 import { saveMeal } from '@storage/meal/save-meal';
+import { useNavigation } from '@react-navigation/native';
 
 export function NewMeal() {
+  const { navigate } = useNavigation();
   const { COLORS } = useTheme();
   const uid = new ShortUniqueId({ length: 8 });
 
@@ -59,7 +61,13 @@ export function NewMeal() {
 
     await saveMeal(mealData);
 
-    console.log(1);
+    setMeal('');
+    setMealDescription('');
+    setTime('');
+    setDate('');
+    setMealType(null);
+
+    navigate('celebrate', { diet: mealType });
   }, [mealType, meal, date, time, mealDescription]);
 
   return (

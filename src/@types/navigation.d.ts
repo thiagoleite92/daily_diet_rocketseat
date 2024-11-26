@@ -4,6 +4,7 @@ export declare global {
       numbers: undefined;
       home: undefined;
       'new-meal': undefined;
+      celebrate: { diet: boolean };
     }
   }
 }
