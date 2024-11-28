@@ -13,7 +13,8 @@ import { SectionList, Text, View } from 'react-native';
 import { DietItem } from '@components/DietItem';
 import { DietSection } from '@components/DietSection';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { getMeals } from '@storage/meal/get-meals';
+import { getMappedMeals } from '@storage/meal/get-mapped-meals';
+import { StatusBar } from 'expo-status-bar';
 
 export function Home() {
   const { navigate } = useNavigation();
@@ -24,22 +25,23 @@ export function Home() {
     navigate('new-meal');
   };
 
-  const fetchMeals = async () => {
-    const response = await getMeals();
+  const fetchMappedMeals = async () => {
+    const response = await getMappedMeals();
     setMeals(response);
   };
 
   useFocusEffect(
     useCallback(() => {
-      fetchMeals();
+      fetchMappedMeals();
     }, [])
   );
 
   return (
     <HomeContainer>
+      <StatusBar backgroundColor="white" />
       <HeaderContainer>
         <Header showBackButton={false} />
-        <Summary meta={80} />
+        <Summary />
       </HeaderContainer>
       <NewMealContainer>
         <ButtonTitle>Refeições</ButtonTitle>

@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Alert, Text } from 'react-native';
+import { Alert, Platform, Text } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import ShortUniqueId from 'short-unique-id';
 import { Input } from '@components/Input';
@@ -21,7 +21,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export function NewMeal() {
   const { navigate } = useNavigation();
-  const { COLORS } = useTheme();
+  const { COLORS, FONT_FAMILY, FONT_SIZE } = useTheme();
   const uid = new ShortUniqueId({ length: 8 });
 
   const [meal, setMeal] = useState('');
@@ -35,26 +35,11 @@ export function NewMeal() {
   };
 
   const handleNewMeal = useCallback(async () => {
-    if (
-      !meal ||
-      meal?.trim()?.length < 3 ||
-      !date ||
-      date.trim()?.length < 9 ||
-      !time ||
-      time.trim()?.length < 5 ||
-      !mealDescription ||
-      mealDescription.trim()?.length < 4 ||
-      mealType === null
-    ) {
-      console.log('erro');
-      return Alert.alert('Verifique os campos e opção de refeição');
-    }
-
     const mealData: MealDto = {
       meal,
       time,
       date,
-      diet: mealType,
+      diet: mealType === null ? !mealType : mealType,
       description: mealDescription,
       id: uid.rnd(),
     };
@@ -67,11 +52,11 @@ export function NewMeal() {
     setDate('');
     setMealType(null);
 
-    navigate('celebrate', { diet: mealType });
+    navigate('celebrate', { diet: mealType === null ? !mealType : mealType });
   }, [mealType, meal, date, time, mealDescription]);
 
   return (
-    <NewMealContainer>
+    <NewMealContainer behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <Header showBackButton headerTitle="Nova Refeição" />
       <Form>
         <Input
@@ -89,6 +74,7 @@ export function NewMeal() {
           placeholder="Mix de salada de frutas sem leite condensado"
           onChangeText={setMealDescription}
           value={mealDescription}
+          style={{ height: 150 }}
         />
         <DateContainer>
           <MaskInput
@@ -106,6 +92,17 @@ export function NewMeal() {
             value={time}
           />
         </DateContainer>
+        <Text
+          style={{
+            marginBottom: -20,
+            marginTop: 80,
+            color: COLORS.GRAY_200,
+            fontFamily: FONT_FAMILY.BOLD,
+            fontSize: FONT_SIZE.MD,
+          }}
+        >
+          Está dentro da dieta?
+        </Text>
         <MealTypeContainer>
           <MealType
             diet={mealType ? mealType : null}

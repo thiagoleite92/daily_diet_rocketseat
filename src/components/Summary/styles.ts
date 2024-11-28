@@ -2,13 +2,13 @@ import { ArrowLeft, ArrowUpRight } from 'phosphor-react-native';
 import styled, { css } from 'styled-components/native';
 
 type SummaryContainerProps = {
-  meta: number;
+  ratio: number;
   routeName: string;
 };
 
 export const SummaryContainer = styled.View<SummaryContainerProps>`
-  background-color: ${({ theme, meta }) =>
-    meta >= 80 ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
+  background-color: ${({ theme, ratio }) =>
+    ratio >= 80 ? theme.COLORS.GREEN : theme.COLORS.RED};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -36,12 +36,16 @@ export const SubIndex = styled.Text`
   `}
 `;
 
-export const UpRightArrow = styled(ArrowUpRight).attrs(({ theme }) => ({
-  size: 32,
-  color: theme.COLORS.GREEN_DARK,
-}))``;
+export const UpRightArrow = styled(ArrowUpRight).attrs<{ ratio: number }>(
+  ({ theme, ratio }) => ({
+    size: 32,
+    color: ratio >= 80 ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK,
+  })
+)``;
 
-export const LeftArrow = styled(ArrowLeft).attrs(({ theme }) => ({
-  size: 32,
-  color: theme.COLORS.GREEN_DARK,
-}))``;
+export const LeftArrow = styled(ArrowLeft).attrs<{ ratio: number }>(
+  ({ theme, ratio }) => ({
+    size: 32,
+    color: ratio >= 80 ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK,
+  })
+)``;

@@ -1,18 +1,16 @@
 import { Circle } from 'phosphor-react-native';
 import styled, { css, DefaultTheme } from 'styled-components/native';
 
-export const NewMealContainer = styled.SafeAreaView`
+export const NewMealContainer = styled.KeyboardAvoidingView`
   flex: 1;
   background-color: white;
 `;
 
 export const Form = styled.View`
-  flex: 1;
   padding: 24px;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 40px;
+  flex: 1;
+  gap: 35px;
 `;
 
 export const DateContainer = styled.View`
@@ -20,7 +18,6 @@ export const DateContainer = styled.View`
   flex-direction: row;
   gap: 8px;
   justify-content: space-between;
-  margin-bottom: 8px;
 `;
 
 export const MealTypeContainer = styled.View`

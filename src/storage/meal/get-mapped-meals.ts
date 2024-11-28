@@ -4,7 +4,7 @@ import { MEAL_COLLECTION } from '@storage/storageConfig';
 import { MealType } from 'src/types/MealType';
 import { MealDto } from './meal-dto';
 
-export const getMeals = async (): Promise<MealType[]> => {
+export const getMappedMeals = async (): Promise<MealType[]> => {
   try {
     const dates = await getDates();
 
@@ -12,12 +12,12 @@ export const getMeals = async (): Promise<MealType[]> => {
 
     const storedMeals: MealDto[] = storage ? JSON.parse(storage) : [];
 
-    const filterMeals = dates.map((date: string) => {
+    const mappedMeals = dates.map((date: string) => {
       const meals = storedMeals.filter((m: MealDto) => m.date === date);
       return { date, data: meals };
     });
 
-    return filterMeals;
+    return mappedMeals;
   } catch (error) {
     console.error('Error fetching meals:', error);
     return [];

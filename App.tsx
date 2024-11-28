@@ -4,7 +4,6 @@ import {
   NunitoSans_400Regular as nunito400Regular,
   NunitoSans_700Bold as nunito700Bold,
 } from '@expo-google-fonts/nunito-sans';
-import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider, useTheme } from 'styled-components/native';
 import { theme } from '@theme/index';
 import { Routes } from 'src/routes';

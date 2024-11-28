@@ -9,14 +9,14 @@ import {
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
 import { useTheme } from 'styled-components';
+import { getMealsRatio } from '@storage/meal/get-meals-ratio';
+import { useEffect, useState } from 'react';
 
-type SummaryProps = {
-  meta: number;
-};
-export function Summary({ meta }: SummaryProps) {
+export function Summary() {
   const { navigate } = useNavigation();
-
   const { name } = useRoute();
+
+  const [ratio, setRatio] = useState(0);
 
   const handlewViewNumbers = () => {
     navigate('numbers');
@@ -26,14 +26,24 @@ export function Summary({ meta }: SummaryProps) {
     navigate('home');
   };
 
+  const fetchSummary = async () => {
+    const { ratio } = await getMealsRatio();
+
+    setRatio(ratio);
+  };
+
+  useEffect(() => {
+    fetchSummary();
+  });
+
   return (
-    <SummaryContainer meta={meta} routeName={name}>
+    <SummaryContainer ratio={ratio} routeName={name}>
       {name === 'numbers' && (
         <TouchableOpacity
           style={{ alignSelf: 'flex-start' }}
           onPress={() => handleGoHome()}
         >
-          <LeftArrow />
+          <LeftArrow ratio={ratio} />
         </TouchableOpacity>
       )}
 
@@ -42,10 +52,10 @@ export function Summary({ meta }: SummaryProps) {
           style={{ alignSelf: 'flex-end' }}
           onPress={() => handlewViewNumbers()}
         >
-          <UpRightArrow />
+          <UpRightArrow ratio={ratio} />
         </TouchableOpacity>
       )}
-      <Index>90,86%</Index>
+      <Index>{ratio?.toFixed(2)}%</Index>
       <SubIndex>das refeições dentro da dieta</SubIndex>
     </SummaryContainer>
   );

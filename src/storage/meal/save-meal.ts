@@ -19,10 +19,14 @@ export const saveMeal = async ({
     await saveDate(date);
   }
 
-  const storage = await AsyncStorage.getItem(MEAL_COLLECTION);
+  try {
+    const storage = await AsyncStorage.getItem(MEAL_COLLECTION);
 
-  const meals: MealDto[] = storage ? JSON.parse(storage) : [];
-  meals.push({ date, description, diet, id, meal, time });
+    const meals: MealDto[] = storage ? JSON.parse(storage) : [];
+    meals.push({ date, description, diet, id, meal, time });
 
-  await AsyncStorage.setItem(MEAL_COLLECTION, JSON.stringify(meals));
+    await AsyncStorage.setItem(MEAL_COLLECTION, JSON.stringify(meals));
+  } catch (error) {
+    console.log(error, 'aqui');
+  }
 };
