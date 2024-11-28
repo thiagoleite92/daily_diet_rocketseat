@@ -1,17 +1,29 @@
 import { ArrowLeft } from 'phosphor-react-native';
-import styled, { css } from 'styled-components/native';
+import styled, { css, DefaultTheme } from 'styled-components/native';
 
 type HeaderContainerProps = {
-  routeName: string;
+  routeName: 'new-meal' | 'meal-details';
+  diet?: boolean;
+};
+
+const getColor = (
+  theme: DefaultTheme,
+  routeName: 'new-meal' | 'meal-details',
+  diet?: boolean
+) => {
+  if (routeName === 'new-meal') {
+    return theme.COLORS.GRAY_500;
+  }
+
+  return diet ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT;
 };
 
 export const HeaderContainer = styled.View<HeaderContainerProps>`
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: ${({ routeName }) => (routeName === 'new-meal' ? '100px' : '150px')};
-  background-color: ${({ routeName, theme }) =>
-    routeName === 'new-meal' ? theme.COLORS.GRAY_500 : '#fff'};
+  background-color: ${({ routeName, theme, diet }) =>
+    getColor(theme, routeName, diet)};
 `;
 
 export const Container = styled.View`
@@ -28,13 +40,13 @@ interface ImagesProps {
 }
 
 export const Logo = styled.Image<ImagesProps>`
-  width: ${({ width }) => width}px;
-  height: ${({ height }) => height}px;
+  width: ${({ width = 50 }) => width}px;
+  height: ${({ height = 50 }) => height}px;
 `;
 
 export const Avatar = styled.Image<ImagesProps>`
-  width: ${({ width }) => width}px;
-  height: ${({ height }) => height}px;
+  width: ${({ width = 50 }) => width}px;
+  height: ${({ height = 50 }) => height}px;
 `;
 
 export const TitleContainer = styled.View`

@@ -7,22 +7,31 @@ import {
   TimeText,
 } from './styles';
 import { Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { MealDto } from '@storage/meal/meal-dto';
 
-type DietItemProps = {
-  meal: string;
-  time: string;
-  diet: boolean;
-};
-export function DietItem({ diet, meal, time }: DietItemProps) {
+type DietItemProps = MealDto;
+
+export function DietItem(props: DietItemProps) {
+  const { navigate } = useNavigation();
+
+  const handleMealDetailsNavigate = () => {
+    navigate('meal-details', { meal: { ...props } });
+  };
+
   return (
-    <Item>
+    <Item
+      onPress={() => {
+        handleMealDetailsNavigate();
+      }}
+    >
       <TimeContainer>
-        <TimeText>{time}</TimeText>
+        <TimeText>{props?.time}</TimeText>
       </TimeContainer>
       <MealContainer>
-        <TimeText>{meal}</TimeText>
+        <TimeText>{props?.meal}</TimeText>
         <Text style={{ textAlign: 'center' }}>
-          <DietIcon diet={diet} />
+          <DietIcon diet={props?.diet} />
         </Text>
       </MealContainer>
     </Item>

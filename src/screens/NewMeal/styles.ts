@@ -10,7 +10,7 @@ export const Form = styled.View`
   padding: 24px;
   display: flex;
   flex: 1;
-  gap: 35px;
+  gap: 40px;
 `;
 
 export const DateContainer = styled.View`

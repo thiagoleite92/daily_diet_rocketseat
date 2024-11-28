@@ -10,22 +10,27 @@ import {
 } from './styles';
 import logoImg from '@assets/logo.png';
 import avatarImg from '@assets/avatar.png';
-import { Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import { MealDto } from '@storage/meal/meal-dto';
 
 type HeaderProps = {
   showBackButton: boolean;
   headerTitle?: string;
+  diet?: boolean;
 };
-export function Header({ showBackButton, headerTitle }: HeaderProps) {
+
+export function Header({ showBackButton, headerTitle, diet }: HeaderProps) {
   const { navigate } = useNavigation();
-  const { name } = useRoute();
+  const { name } = useRoute() as { name: 'new-meal' | 'meal-details' };
+
+  // console.log(params
 
   const handleNavigateToHome = () => {
     navigate('home');
   };
 
   return (
-    <HeaderContainer routeName={name}>
+    <HeaderContainer routeName={name} diet={diet!}>
       <Container>
         {!showBackButton && <Logo source={logoImg} height={37} width={82} />}
         {!showBackButton && (
@@ -39,7 +44,7 @@ export function Header({ showBackButton, headerTitle }: HeaderProps) {
             >
               <LeftArrow />
             </TouchableOpacity>
-            {headerTitle && <TitleText>Nova Refeição</TitleText>}
+            {headerTitle && <TitleText>{headerTitle}</TitleText>}
           </TitleContainer>
         )}
       </Container>

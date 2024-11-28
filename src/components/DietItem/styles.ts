@@ -1,7 +1,7 @@
 import { Circle } from 'phosphor-react-native';
 import styled from 'styled-components/native';
 
-export const Item = styled.View`
+export const Item = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   border: ${({ theme }) => `1px solid ${theme.COLORS.GRAY_200}`};

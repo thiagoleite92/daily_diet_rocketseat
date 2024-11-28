@@ -6,6 +6,7 @@ import { Numbers } from '@screens/Numbers';
 import { NewMeal } from '@screens/NewMeal';
 import { useRoute } from '@react-navigation/native';
 import { Celebrate } from '@screens/Celebrate';
+import { MealDetails } from '@screens/MealDetails';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ export const AppRoutes = () => {
         <Screen name="numbers" component={Numbers} />
         <Screen name="home" component={Home} />
         <Screen name="celebrate" component={Celebrate} />
+        <Screen name="meal-details" component={MealDetails} />
       </Navigator>
     </View>
   );

@@ -95,7 +95,7 @@ export function NewMeal() {
         <Text
           style={{
             marginBottom: -20,
-            marginTop: 80,
+            marginTop: 20,
             color: COLORS.GRAY_200,
             fontFamily: FONT_FAMILY.BOLD,
             fontSize: FONT_SIZE.MD,

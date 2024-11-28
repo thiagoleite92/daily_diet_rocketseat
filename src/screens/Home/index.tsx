@@ -56,9 +56,7 @@ export function Home() {
       <SectionList
         sections={meals}
         keyExtractor={(item) => item.id}
-        renderItem={({ item: { time, diet, meal } }) => (
-          <DietItem time={time} diet={diet} meal={meal} />
-        )}
+        renderItem={({ item }) => <DietItem {...item} />}
         renderSectionHeader={({ section: { date } }) => (
           <DietSection title={date} />
         )}
