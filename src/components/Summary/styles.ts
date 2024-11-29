@@ -26,14 +26,16 @@ export const Index = styled.Text`
     font-size: ${theme.FONT_SIZE.XXXL}px;
     font-family: ${theme.FONT_FAMILY.BOLD};
   `}
+  text-align: center;
 `;
 
 export const SubIndex = styled.Text`
   ${({ theme }) => css`
     color: ${theme.COLORS.GRAY_200};
-    font-size: ${theme.FONT_SIZE.MD}px;
+    font-size: ${theme.FONT_SIZE.LG}px;
     font-family: ${theme.FONT_FAMILY.REGULAR};
   `}
+  text-align: center;
 `;
 
 export const UpRightArrow = styled(ArrowUpRight).attrs<{ ratio: number }>(

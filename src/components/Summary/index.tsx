@@ -47,7 +47,7 @@ export function Summary() {
         </TouchableOpacity>
       )}
 
-      {name === 'home' && (
+      {name === 'home' && ratio > 0 && (
         <TouchableOpacity
           style={{ alignSelf: 'flex-end' }}
           onPress={() => handlewViewNumbers()}
@@ -55,8 +55,20 @@ export function Summary() {
           <UpRightArrow ratio={ratio} />
         </TouchableOpacity>
       )}
-      <Index>{ratio?.toFixed(2)}%</Index>
-      <SubIndex>das refeições dentro da dieta</SubIndex>
+
+      {ratio > 0 && (
+        <>
+          <Index>{ratio?.toFixed(2)}%</Index>
+          <SubIndex>das refeições dentro da dieta</SubIndex>
+        </>
+      )}
+
+      {!ratio && (
+        <>
+          <SubIndex>Nenhuma refeição registrada.</SubIndex>
+          <SubIndex>Comece a registrar suas refeições agora mesmo!</SubIndex>
+        </>
+      )}
     </SummaryContainer>
   );
 }

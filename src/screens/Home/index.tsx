@@ -50,6 +50,7 @@ export function Home() {
           text="Nova refeição"
           onPress={handleNewMealPage}
           variant="PRIMARY"
+          title=""
         />
       </NewMealContainer>
 
