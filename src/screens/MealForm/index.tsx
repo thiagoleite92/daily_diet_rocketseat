@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Alert, Platform, Text } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import ShortUniqueId from 'short-unique-id';
@@ -17,11 +17,14 @@ import { Button } from '@components/Button';
 import { StatusBar } from 'expo-status-bar';
 import { MealDto } from '@storage/meal/meal-dto';
 import { saveMeal } from '@storage/meal/save-meal';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { getMealDetails } from '@storage/meal/get-meal-details';
+import { editMeal } from '@storage/meal/edit-meal';
 
-export function NewMeal() {
-  const { navigate } = useNavigation();
+export function MealForm() {
   const { COLORS, FONT_FAMILY, FONT_SIZE } = useTheme();
+  const { navigate } = useNavigation();
+  const route = useRoute() as { name: string; params?: { id: string } };
   const uid = new ShortUniqueId({ length: 8 });
 
   const [meal, setMeal] = useState('');
@@ -41,10 +44,16 @@ export function NewMeal() {
       date,
       diet: mealType === null ? !mealType : mealType,
       description: mealDescription,
-      id: uid.rnd(),
+      id: route?.params?.id ?? uid.rnd(),
     };
 
-    await saveMeal(mealData);
+    if (!route?.params?.id) {
+      await saveMeal(mealData);
+      navigate('celebrate', { diet: mealType === null ? !mealType : mealType });
+      return;
+    }
+
+    await editMeal(mealData);
 
     setMeal('');
     setMealDescription('');
@@ -52,12 +61,36 @@ export function NewMeal() {
     setDate('');
     setMealType(null);
 
-    navigate('celebrate', { diet: mealType === null ? !mealType : mealType });
+    navigate('home');
   }, [mealType, meal, date, time, mealDescription]);
+
+  const fetchMealDetails = useCallback(async () => {
+    if (!route?.params?.id) {
+      return;
+    }
+
+    const response = await getMealDetails(route?.params?.id);
+
+    if (response) {
+      setMeal(response.meal);
+      setMealDescription(response.description);
+      setTime(response.time);
+      setDate(response.date);
+      setMealType(response.diet);
+      return;
+    }
+
+    return;
+  }, [route?.params?.id]);
+
+  useEffect(() => {
+    fetchMealDetails();
+  }, [fetchMealDetails]);
 
   return (
     <NewMealContainer behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <Header showBackButton headerTitle="Nova Refeição" />
+      <StatusBar style="auto" backgroundColor={COLORS.GRAY_500} />
+      <Header showBackButton id={route?.params?.id} />
       <Form>
         <Input
           label="Refeição"
@@ -95,7 +128,7 @@ export function NewMeal() {
         <Text
           style={{
             marginBottom: -20,
-            marginTop: 20,
+            marginTop: 40,
             color: COLORS.GRAY_200,
             fontFamily: FONT_FAMILY.BOLD,
             fontSize: FONT_SIZE.MD,
@@ -125,12 +158,15 @@ export function NewMeal() {
         </MealTypeContainer>
         <Button
           variant="PRIMARY"
-          text="Cadastrar Refeição"
-          showIcon={false}
+          text={
+            route?.name === 'new-meal'
+              ? 'Cadastrar Refeição'
+              : 'Salvar Alterações'
+          }
           onPress={handleNewMeal}
+          icon={{ icon: '' }}
         />
       </Form>
-      <StatusBar style="auto" backgroundColor={COLORS.GRAY_500} />
     </NewMealContainer>
   );
 }

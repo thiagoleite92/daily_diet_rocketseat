@@ -16,7 +16,7 @@ export function DietItem(props: DietItemProps) {
   const { navigate } = useNavigation();
 
   const handleMealDetailsNavigate = () => {
-    navigate('meal-details', { meal: { ...props } });
+    navigate('meal-details', { id: props?.id });
   };
 
   return (

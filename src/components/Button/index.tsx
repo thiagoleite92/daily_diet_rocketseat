@@ -1,27 +1,23 @@
-import {
-  ButtonContainer,
-  TextContainer,
-  PlusSign,
-  VariantProps,
-} from './styles';
+import { IconTypes, RenderICon } from '@components/RenderIcon';
+import { ButtonContainer, TextContainer, VariantProps } from './styles';
 
 type ButtonProps = {
   text?: string;
-  showIcon: boolean;
+  icon: IconTypes;
   onPress?: () => void;
 } & VariantProps;
 
 export function Button({
   text,
   onPress = () => {},
+  icon,
   variant = 'PRIMARY',
-  showIcon = true,
 }: ButtonProps) {
   return (
     <ButtonContainer onPress={() => onPress()} variant={variant}>
-      {showIcon && (
+      {icon && (
         <TextContainer variant={variant}>
-          <PlusSign variant={variant} />
+          <RenderICon icon={icon.icon} variant={variant} />
         </TextContainer>
       )}
       <TextContainer variant={variant}>{text}</TextContainer>

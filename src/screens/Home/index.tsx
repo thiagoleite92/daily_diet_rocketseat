@@ -8,7 +8,7 @@ import {
 import { Summary } from '@components/Summary';
 import { Button } from '@components/Button';
 import { MealType } from 'src/types/MealType';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { SectionList, Text, View } from 'react-native';
 import { DietItem } from '@components/DietItem';
 import { DietSection } from '@components/DietSection';
@@ -46,7 +46,7 @@ export function Home() {
       <NewMealContainer>
         <ButtonTitle>Refeições</ButtonTitle>
         <Button
-          showIcon
+          icon={{ icon: 'plus-sign' }}
           text="Nova refeição"
           onPress={handleNewMealPage}
           variant="PRIMARY"
@@ -55,7 +55,7 @@ export function Home() {
 
       <SectionList
         sections={meals}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item?.id}
         renderItem={({ item }) => <DietItem {...item} />}
         renderSectionHeader={({ section: { date } }) => (
           <DietSection title={date} />

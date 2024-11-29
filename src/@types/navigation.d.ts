@@ -6,8 +6,9 @@ export declare global {
       numbers: undefined;
       home: undefined;
       'new-meal': undefined;
+      'edit-meal': { id: string };
       celebrate: { diet: boolean };
-      'meal-details': { meal: MealDto };
+      'meal-details': { id: string };
     }
   }
 }

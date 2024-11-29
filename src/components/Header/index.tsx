@@ -11,26 +11,46 @@ import {
 import logoImg from '@assets/logo.png';
 import avatarImg from '@assets/avatar.png';
 import { TouchableOpacity } from 'react-native';
-import { MealDto } from '@storage/meal/meal-dto';
+import { useCallback } from 'react';
+
+export type RouteNames = 'new-meal' | 'meal-details' | 'home' | 'edit-meal';
 
 type HeaderProps = {
   showBackButton: boolean;
   headerTitle?: string;
-  diet?: boolean;
+  diet?: boolean; // Se for opcional
+  id?: string;
 };
 
-export function Header({ showBackButton, headerTitle, diet }: HeaderProps) {
+const headerTitles: Record<RouteNames, string> = {
+  'new-meal': 'Nova Refeição',
+  'edit-meal': 'Editar Refeição',
+  'meal-details': 'Refeição',
+  home: 'Home',
+};
+
+export function Header({ showBackButton, headerTitle, diet, id }: HeaderProps) {
   const { navigate } = useNavigation();
-  const { name } = useRoute() as { name: 'new-meal' | 'meal-details' };
+  const { name } = useRoute() as { name: RouteNames };
 
-  // console.log(params
+  const handleNavigate = useCallback(() => {
+    if (name === 'new-meal' || name === 'meal-details') {
+      navigate('home');
+      return;
+    }
 
-  const handleNavigateToHome = () => {
-    navigate('home');
-  };
+    if (id && name === 'edit-meal') {
+      navigate('meal-details', { id });
+      return;
+    }
+  }, [id, name, navigate]);
+
+  const headerText = useCallback(() => {
+    return headerTitle || headerTitles[name] || '';
+  }, [headerTitle, name]);
 
   return (
-    <HeaderContainer routeName={name} diet={diet!}>
+    <HeaderContainer routeName={name} diet={!!diet}>
       <Container>
         {!showBackButton && <Logo source={logoImg} height={37} width={82} />}
         {!showBackButton && (
@@ -39,12 +59,12 @@ export function Header({ showBackButton, headerTitle, diet }: HeaderProps) {
         {showBackButton && (
           <TitleContainer>
             <TouchableOpacity
-              onPress={handleNavigateToHome}
+              onPress={handleNavigate}
               style={{ marginLeft: 27 }}
             >
               <LeftArrow />
             </TouchableOpacity>
-            {headerTitle && <TitleText>{headerTitle}</TitleText>}
+            {headerText() && <TitleText>{headerText()}</TitleText>}
           </TitleContainer>
         )}
       </Container>

@@ -1,17 +1,22 @@
 import { ArrowLeft } from 'phosphor-react-native';
 import styled, { css, DefaultTheme } from 'styled-components/native';
+import { RouteNames } from '.';
 
 type HeaderContainerProps = {
-  routeName: 'new-meal' | 'meal-details';
+  routeName: RouteNames;
   diet?: boolean;
 };
 
 const getColor = (
   theme: DefaultTheme,
-  routeName: 'new-meal' | 'meal-details',
+  routeName: RouteNames,
   diet?: boolean
 ) => {
-  if (routeName === 'new-meal') {
+  if (routeName === 'home') {
+    return theme.COLORS.WHITE;
+  }
+
+  if (routeName === 'new-meal' || routeName === 'edit-meal') {
     return theme.COLORS.GRAY_500;
   }
 
@@ -21,7 +26,7 @@ const getColor = (
 export const HeaderContainer = styled.View<HeaderContainerProps>`
   flex-direction: column;
   justify-content: space-between;
-  height: ${({ routeName }) => (routeName === 'new-meal' ? '100px' : '150px')};
+  height: ${({ routeName }) => (routeName === 'new-meal' ? '100px' : '100px')};
   background-color: ${({ routeName, theme, diet }) =>
     getColor(theme, routeName, diet)};
 `;
